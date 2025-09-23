@@ -9,12 +9,12 @@ from main.preprocess import load_images_from_folders, make_subsets, downsample_i
 
 # Connecting ClearML with the current process,
 # from here on everything is logged automatically
-task = Task.init(project_name="GarbageClassifier", task_name="Preprocess dataset")
+task = Task.init(project_name="WildlifeDetector", task_name="Preprocess dataset")
 
 # program arguments
 # Use either dataset_task_id to point to a tasks artifact or
 # use a direct url with dataset_url
-image_size = (128, 128)
+image_size = (640, 512)
 args = {
     'dataset_task_id': '', #update id if it needs running locally
     'dataset_url': '',

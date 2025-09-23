@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 # Initialize the HPO task
 task = Task.init(
-    project_name="GarbageClassifier",
+    project_name="WildlifeDetector",
     task_name='HPO',
     task_type=Task.TaskTypes.optimizer,
     reuse_last_task_id=False

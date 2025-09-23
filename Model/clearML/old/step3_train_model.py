@@ -13,7 +13,7 @@ from main.preprocess import create_generators
 
 # Connecting ClearML with the current process,
 # from here on everything is logged automatically
-task = Task.init(project_name="GarbageClassifier", task_name="Train model")
+task = Task.init(project_name="WildlifeDetector", task_name="Train model")
 logger = Logger.current_logger()
 
 # Arguments

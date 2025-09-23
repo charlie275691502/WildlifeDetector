@@ -2,13 +2,26 @@ from clearml import Task
 import os
 
 # Create a dataset experiment
-task = Task.init(project_name="GarbageClassifier", task_name="Upload dataset")
+task = Task.init(project_name="WildlifeDetector", task_name="Upload dataset")
+
+task.set_packages([
+    "boto3==1.37.38",
+    "keras==3.3.3",       # good match with TF 2.20.0
+    "matplotlib==3.10.1",
+    "numpy==2.1.1",
+    "pandas==2.2.3",
+    "pillow==11.2.1",
+    "scikit_learn==1.6.1",
+    "seaborn==0.13.2",
+    "tensorflow==2.20.0",
+    "clearml==1.18.0",
+])
 
 # Only create the task, we will actually execute it later
 task.execute_remotely()
 
 # Path to the zipped dataset file
-zipped_dataset = "../../Data/balanced_dataset.zip"
+zipped_dataset = "../../Data/Wildlife_Drone_Datasets.rar"
 
 print(f"Current working directory: {os.getcwd()}")
 

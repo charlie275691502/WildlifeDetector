@@ -25,7 +25,7 @@ def run_pipeline():
     # Connecting ClearML with the current pipeline,
     # from here on everything is logged automatically
     pipe = PipelineController(
-        name="Train model", project="GarbageClassifier", version="0.0.1", add_pipeline_tags=False
+        name="All tasks", project="WildlifeDetector", version="0.0.1", add_pipeline_tags=False
     )
 
     pipe.add_parameter(
@@ -36,10 +36,43 @@ def run_pipeline():
     pipe.set_default_execution_queue("helloworld")
 
     pipe.add_step(
+        name="stage_data",
+        base_task_project="WildlifeDetector",
+        base_task_name="Upload dataset",
+        parameter_override={"General/dataset_url": "${pipeline.url}"},
+        cache_executed_step=True,
+    )
+
+    pipe.add_step(
+        name="stage_process",
+        parents=["stage_data"],
+        base_task_name="Preprocess dataset",
+        base_task_project="WildlifeDetector",
+        parameter_override={
+            "General/dataset_task_id": "${stage_data.id}",
+            "General/test_size": 0.25,
+            "General/random_state": 42
+        },
+        cache_executed_step=True,
+    )
+
+    pipe.add_step(
         name="stage_train",
-        base_task_project="GarbageClassifier",
+        parents=["stage_process"],
+        base_task_project="WildlifeDetector",
         base_task_name="Train model",
-        parameter_override={"General/dataset_task_id": "80b62f1dc03d4c61b299d63ed4f61a41"},
+        parameter_override={"General/dataset_task_id": "${stage_process.id}"},
+        cache_executed_step=True,
+    )
+
+    pipe.add_step(
+        name="stage_hpo",
+        parents=["stage_train", "stage_process"],
+        base_task_project="WildlifeDetector",
+        base_task_name="HPO",
+        parameter_override={
+                "General/dataset_task_id": "26a16aa50c9c42a09a26af57fcebf215",
+                "General/base_train_task_id": "${stage_train.id}"},
         cache_executed_step=True,
     )
 
