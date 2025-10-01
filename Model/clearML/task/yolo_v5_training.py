@@ -13,7 +13,7 @@ task = Task.init(
 task.set_packages([
     "PyYAML==6.0.2",
     "matplotlib==3.10.1",
-    "numpy==2.2.4",
+    "numpy==1.26.4",
     "pandas==2.2.3",
     "pillow==11.1.0",
     "seaborn==0.13.2",
@@ -83,13 +83,14 @@ task.execute_remotely()
 
 # === Step 1: Training ===
 WEIGHTS_PATH = os.path.join(YOLOV5_REPO, "yolov5m.pt")
+CFG_PATH = os.path.join(YOLOV5_REPO, "models", "yolov5m.yaml")
 train_cmd = [
     "python", TRAIN_SCRIPT,
     "--img", str(args["img_size"]),
     "--batch", str(args["batch_size"]),
     "--epochs", str(args["epochs"]),
     "--data", tmp_yaml,
-    "--cfg", args["cfg_yaml"],
+    "--cfg", CFG_PATH,
     "--weights", WEIGHTS_PATH,
     "--name", args["name"],
     "--patience", str(args["patience"]),
