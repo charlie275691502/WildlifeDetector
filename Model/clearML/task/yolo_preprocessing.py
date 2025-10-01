@@ -38,8 +38,8 @@ def count_bb(lbl_dir):
 Task.force_requirements_env_freeze(False)
 task = Task.init(project_name="WildlifeDetector", task_name="pipeline_yolo_preprocessing")
 task.set_packages([
-    "torch==2.5.1",
-    "torchvision==0.20.1",
+    "torch==2.5.1+cu121",  # match your installed CUDA version (check with torch.version.cuda)
+    "torchvision==0.20.1+cu121",
     "PyYAML==6.0.2",
     "matplotlib==3.10.1",
     "numpy==2.2.4",
