@@ -63,7 +63,7 @@ with open(tmp_yaml, "w") as f:
 # === Define parameters (can be changed from UI) ===
 args = {
     "img_size": 640,
-    "batch_size": 8,
+    "batch_size": 2,
     "epochs": 3,
     "cfg_yaml": os.path.join(YOLOV5_REPO, "models", "yolov5m.yaml"), # Relative path to model config
     "weights": "yolov5m.pt",
@@ -82,6 +82,7 @@ task.execute_remotely()
 
 
 # === Step 1: Training ===
+WEIGHTS_PATH = os.path.join(YOLOV5_REPO, "yolov5m.pt")
 train_cmd = [
     "python", TRAIN_SCRIPT,
     "--img", str(args["img_size"]),
@@ -89,7 +90,7 @@ train_cmd = [
     "--epochs", str(args["epochs"]),
     "--data", tmp_yaml,
     "--cfg", args["cfg_yaml"],
-    "--weights", args["weights"],
+    "--weights", WEIGHTS_PATH,
     "--name", args["name"],
     "--patience", str(args["patience"]),
     "--workers", "0",            # Windows-friendly
