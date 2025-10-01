@@ -35,7 +35,7 @@ def count_bb(lbl_dir):
 
 # Connecting ClearML with the current process,
 # from here on everything is logged automatically
-task = Task.init(project_name="WildlifeDetector", task_name="Preprocess dataset")
+task = Task.init(project_name="WildlifeDetector", task_name="pipeline_yolo_preprocessing")
 
 # program arguments
 # Use either dataset_task_id to point to a tasks artifact or
@@ -68,7 +68,6 @@ print(f"Found dataset: {dataset_name} in project {dataset_project}")
 artifact_path = dataset.get_local_copy()
 print("Dataset downloaded to:", artifact_path)
 
-yaml_path = os.path.join(artifact_path, "Yolo.yaml")
 zip_path = os.path.join(artifact_path, "Yolo.zip")
 
 # Unzip if needed
@@ -80,7 +79,6 @@ with zipfile.ZipFile(zip_path, 'r') as zip_ref:
     zip_ref.extractall(unzip_path)
 
 print("Unzipped dataset saved to:", unzip_path)
-print("YAML config file path:", yaml_path)
 
 # X, y, label_names = load_images_from_folders(os.path.join(unzip_path, "balanced_dataset"), image_size=args['image_size'])
 # print(f"Loaded {len(X)} images with labels: {len(label_names)}")
@@ -100,14 +98,14 @@ print("YAML config file path:", yaml_path)
 
 # print("Artifacts uploaded in background.")
 
-train_image_dir = os.path.join(unzip_path, "Data_Split", "Train", "images")
-train_label_dir = os.path.join(unzip_path, "Data_Split", "Train", "labels")
+train_image_dir = os.path.join(unzip_path, "Yolo", "Train", "images")
+train_label_dir = os.path.join(unzip_path, "Yolo", "Train", "labels")
 
-valid_image_dir = os.path.join(unzip_path, "Data_Split", "Validation", "images")
-valid_label_dir = os.path.join(unzip_path, "Data_Split", "Validation", "labels")
+valid_image_dir = os.path.join(unzip_path, "Yolo", "Validation", "images")
+valid_label_dir = os.path.join(unzip_path, "Yolo", "Validation", "labels")
 
-test_image_dir = os.path.join(unzip_path, "Data_Split", "Test", "images")
-test_label_dir = os.path.join(unzip_path, "Data_Split", "Test", "labels")
+test_image_dir = os.path.join(unzip_path, "Yolo", "Test", "images")
+test_label_dir = os.path.join(unzip_path, "Yolo", "Test", "labels")
 
 
 # === Print stats ===
