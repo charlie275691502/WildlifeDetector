@@ -20,8 +20,21 @@ task.set_packages([
     "clearml==2.0.2",
 ])
 
-# === YOLOv5 repo path (adjust to your local repo folder) ===
-YOLOV5_REPO = os.path.abspath("Model/yolov5")  # adjust if your repo is in a subfolder
+SCRIPT_DIR = os.path.dirname(__file__)
+
+# Clone YOLOv5 repo inside a 'Model' subfolder
+YOLOV5_REPO = os.path.join(SCRIPT_DIR, "../../Model/yolov5")  # Adjust relative to script
+os.makedirs(os.path.dirname(YOLOV5_REPO), exist_ok=True)      # ensure parent folder exists
+
+# Clone repo only if it doesn't exist yet
+if not os.path.exists(YOLOV5_REPO):
+    subprocess.run([
+        "git", "clone",
+        "https://github.com/ultralytics/yolov5.git",
+        YOLOV5_REPO
+    ], check=True)
+
+# Paths to training and validation scripts
 TRAIN_SCRIPT = os.path.join(YOLOV5_REPO, "train.py")
 VAL_SCRIPT = os.path.join(YOLOV5_REPO, "val.py")
 
