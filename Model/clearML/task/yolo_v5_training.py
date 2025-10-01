@@ -10,6 +10,7 @@ task = Task.init(
     task_name="pipeline_yolo_v5_training",
     output_uri=True  # Upload trained weights/artifacts automatically
 )
+task._update_requirements = False
 
 # === YOLOv5 repo path (adjust to your local repo folder) ===
 YOLOV5_REPO = os.path.abspath("Model/yolov5")  # adjust if your repo is in a subfolder

@@ -1,3 +1,4 @@
+import os
 from clearml import Task
 from clearml.automation import PipelineController
 
@@ -22,6 +23,10 @@ def post_execute_callback_example(a_pipeline, a_node):
 
 
 def run_pipeline():
+    if not os.path.exists("Model/yolov5"):
+        os.system("git clone https://github.com/ultralytics/yolov5.git Model/yolov5")
+        os.system("pip install -r Model/yolov5/requirements.txt")
+
     # Connecting ClearML with the current pipeline,
     # from here on everything is logged automatically
     pipe = PipelineController(
@@ -44,9 +49,9 @@ def run_pipeline():
 
     pipe.add_step(
         name="Training YOLOv5",
-        parents=["pipeline_yolo_preprocessing"],
-        base_task_name="pipeline_yolo_v5_training",
+        parents=["Preprocess dataset"],
         base_task_project="WildlifeDetector",
+        base_task_name="pipeline_yolo_v5_training",
         cache_executed_step=True,
     )
 
