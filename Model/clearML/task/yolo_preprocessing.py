@@ -35,7 +35,19 @@ def count_bb(lbl_dir):
 
 # Connecting ClearML with the current process,
 # from here on everything is logged automatically
+Task.force_requirements_env_freeze(False)
 task = Task.init(project_name="WildlifeDetector", task_name="pipeline_yolo_preprocessing")
+task.set_packages([
+    "torch==2.5.1",
+    "torchvision==0.20.1",
+    "PyYAML==6.0.2",
+    "matplotlib==3.10.1",
+    "numpy==2.2.4",
+    "pandas==2.2.3",
+    "pillow==11.1.0",
+    "seaborn==0.13.2",
+    "clearml==2.0.2",
+])
 
 # program arguments
 # Use either dataset_task_id to point to a tasks artifact or

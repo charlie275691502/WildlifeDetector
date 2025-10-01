@@ -5,12 +5,24 @@ import yaml
 import tempfile
 
 # === Initialize ClearML task ===
+Task.force_requirements_env_freeze(False)
 task = Task.init(
     project_name="WildlifeDetector",
     task_name="pipeline_yolo_v5_training",
     output_uri=True  # Upload trained weights/artifacts automatically
 )
 task._update_requirements = False
+task.set_packages([
+    "torch==2.5.1",
+    "torchvision==0.20.1",
+    "PyYAML==6.0.2",
+    "matplotlib==3.10.1",
+    "numpy==2.2.4",
+    "pandas==2.2.3",
+    "pillow==11.1.0",
+    "seaborn==0.13.2",
+    "clearml==2.0.2",
+])
 
 # === YOLOv5 repo path (adjust to your local repo folder) ===
 YOLOV5_REPO = os.path.abspath("Model/yolov5")  # adjust if your repo is in a subfolder
