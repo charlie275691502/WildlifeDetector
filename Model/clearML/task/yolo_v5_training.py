@@ -20,10 +20,7 @@ task.set_packages([
     "clearml==2.0.2",
 ])
 
-SCRIPT_DIR = os.path.dirname(__file__)
-
-# Clone YOLOv5 repo inside a 'Model' subfolder
-YOLOV5_REPO = os.path.join(SCRIPT_DIR, "../../Model/yolov5")  # Adjust relative to script
+YOLOV5_REPO = os.path.abspath(os.path.join("Model", "yolov5"))   # Adjust relative to script
 os.makedirs(os.path.dirname(YOLOV5_REPO), exist_ok=True)      # ensure parent folder exists
 
 # Clone repo only if it doesn't exist yet
@@ -95,7 +92,8 @@ train_cmd = [
     "--name", args["name"],
     "--patience", str(args["patience"]),
     "--workers", "0",            # Windows-friendly
-    "--project", "runs_clearml"  # shorter path
+    "--project", "runs_clearml",  # shorter path
+    "--cache"
 ]
 
 if args["cache"]:
