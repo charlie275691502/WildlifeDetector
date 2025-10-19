@@ -3,3 +3,6 @@ pillow
 torch
 yolov5
 gunicorn
+supervision
+ultralytics
+numpy
